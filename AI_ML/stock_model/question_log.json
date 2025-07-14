@@ -1,0 +1,300 @@
+[
+  {
+    "user_input": "Which year had the most volatile daily S&P 500 swings?",
+    "parsed": {
+      "intent": "most_volatile_year"
+    },
+    "response": "\ud83d\udcca The most volatile year was 2022 with a daily standard deviation of 61.79."
+  },
+  {
+    "user_input": "In 2020, when did the stock market bounce back the most in a single day?",
+    "parsed": {
+      "intent": "unknown"
+    },
+    "response": "\ud83e\udd14 Sorry, I couldn't understand your question. Try asking about biggest gain, worst drop, or average."
+  },
+  {
+    "user_input": "Should I invest in S&P 500 or DJIA?",
+    "parsed": {
+      "intent": "recommend_stock"
+    },
+    "response": "\ud83d\udcc8 Based on historical daily returns, 'S&P 500' had the highest short-term growth on average.\nReturns \u2014 S&P 500: 0.0004, DJIA: 0.0004, HSI: 0.0003\n\u2705 Suggested index to consider: S&P 500"
+  },
+  {
+    "user_input": "Which stock gave the best return last year?",
+    "parsed": {
+      "intent": "recommend_stock"
+    },
+    "response": "\ud83d\udcc8 Based on historical daily returns, 'S&P 500' had the highest short-term growth on average.\nReturns \u2014 S&P 500: 0.0004, DJIA: 0.0004, HSI: 0.0003\n\u2705 Suggested index to consider: S&P 500"
+  },
+  {
+    "user_input": "What\u2019s the best year for the stock market in terms of daily gains?",
+    "parsed": {
+      "intent": "unknown"
+    },
+    "response": "\ud83e\udd14 Sorry, I couldn't understand your question. Try asking about biggest gain, worst drop, or average."
+  },
+  {
+    "user_input": "What\u2019s the best year for the stock market in terms of daily gains?",
+    "parsed": {
+      "intent": "unknown"
+    },
+    "response": "\ud83e\udd14 Sorry, I couldn't understand your question. Try asking about biggest gain, worst drop, or average."
+  },
+  {
+    "user_input": "What\u2019s the best year for the stock market in terms of daily gains?",
+    "parsed": {
+      "intent": "unknown"
+    },
+    "response": "\ud83e\udd14 Sorry, I couldn't understand your question. Try asking about biggest gain, worst drop, or average."
+  },
+  {
+    "user_input": "What\u2019s the best year for the stock market in terms of daily gains?",
+    "parsed": {
+      "intent": "unknown"
+    },
+    "response": "\ud83e\udd14 Sorry, I couldn't understand your question. Try asking about biggest gain, worst drop, or average."
+  },
+  {
+    "user_input": "Which stock gave the best return last year?",
+    "parsed": {
+      "intent": "recommend_stock"
+    },
+    "response": "\ud83d\udcc8 Based on historical daily returns, 'S&P 500' had the highest short-term growth on average.\nReturns \u2014 S&P 500: 0.0004, DJIA: 0.0004, HSI: 0.0003\n\u2705 Suggested index to consider: S&P 500"
+  },
+  {
+    "user_input": "In 2020, when did the stock market bounce back the most in a single day?",
+    "parsed": {
+      "intent": "unknown"
+    },
+    "response": "\ud83e\udd14 Sorry, I couldn't understand your question. Try asking about biggest gain, worst drop, or average."
+  },
+  {
+    "user_input": "What happened in the market in 2050?",
+    "parsed": {
+      "intent": "unknown"
+    },
+    "response": "\ud83e\udd14 Sorry, I couldn't understand your question. Try asking about biggest gain, worst drop, or average."
+  },
+  {
+    "user_input": "What was the strongest daily performance in 2021?",
+    "parsed": {
+      "intent": "unknown"
+    },
+    "response": "\ud83e\udd14 Sorry, I couldn't understand your question. Try asking about biggest gain, worst drop, or average."
+  },
+  {
+    "user_input": "Which index is best to invest in today?",
+    "parsed": {
+      "intent": "recommend_stock"
+    },
+    "response": "\ud83d\udcc8 Based on historical daily returns, 'S&P 500' had the highest short-term growth on average.\nReturns \u2014 S&P 500: 0.0004, DJIA: 0.0004, HSI: 0.0003\n\u2705 Suggested index to consider: S&P 500"
+  },
+  {
+    "user_input": "What's the best performing stock index from the past 10 years?",
+    "parsed": {
+      "intent": "unknown"
+    },
+    "response": "\ud83e\udd14 Sorry, I couldn't understand your question. Try asking about biggest gain, worst drop, or average."
+  },
+  {
+    "user_input": "What's the best performing stock index from the past 10 years?",
+    "intent": "compare_averages",
+    "response": "\ud83d\udcc9 Please provide two years to compare."
+  },
+  {
+    "user_input": "Which index is best to invest in today?",
+    "intent": "compare_averages",
+    "response": "\ud83d\udcc9 Please provide two years to compare."
+  },
+  {
+    "user_input": "Which index is best to invest in today?",
+    "intent": "compare_averages",
+    "response": "\ud83d\udcc9 Please provide two years to compare."
+  },
+  {
+    "user_input": "2010 and 2020",
+    "intent": "years_above_avg",
+    "response": "\ud83d\udcc6 Years where average S&P 500 > 4000: 2021, 2022, 2023, 2024"
+  },
+  {
+    "user_input": "What's the best performing stock index from the past 10 years?",
+    "intent": "compare_averages",
+    "response": "\ud83d\udcc9 Please provide two years to compare."
+  },
+  {
+    "user_input": "2010 to 2020",
+    "intent": "years_above_avg",
+    "response": "\ud83d\udcc6 Years where average S&P 500 > 4000: 2021, 2022, 2023, 2024"
+  },
+  {
+    "user_input": "What's the best performing stock index from the past 10 years?",
+    "intent": "compare_averages",
+    "response": "\ud83d\udcc9 Please provide two years to compare."
+  },
+  {
+    "user_input": "2010 to 2020",
+    "intent": "years_above_avg",
+    "response": "\ud83d\udcca Avg S&P 500: 2010: 1139.97, 2020: 3217.86. Difference: 2077.89."
+  },
+  {
+    "user_input": "Which index is best to invest in today?",
+    "intent": "compare_averages",
+    "response": "\ud83d\udcc9 Please provide two years to compare."
+  },
+  {
+    "user_input": "2024",
+    "intent": "years_above_avg",
+    "response": "\ud83d\udcc6 Years where average S&P 500 > 4000: 2021, 2022, 2023, 2024"
+  },
+  {
+    "user_input": "Which index is best to invest in today?",
+    "intent": "compare_averages",
+    "response": "\ud83d\udcc9 To compare averages, please ask about two years like 'Compare 2015 and 2020'."
+  },
+  {
+    "user_input": "suggest me stock to invest",
+    "intent": "recommend_stock",
+    "response": "\ud83d\udcc8 Based on daily returns, 'S&P 500' performed best.\nReturns:\n  S&P 500: 0.0004\n  DJIA: 0.0004\n  HSI: 0.0003\n\u2705 Suggested Index: S&P 500"
+  },
+  {
+    "user_input": "give me list of all the stocks",
+    "intent": "recommend_stock",
+    "response": "\ud83d\udcc8 Based on daily returns, 'S&P 500' performed best.\nReturns:\n  S&P 500: 0.0004\n  DJIA: 0.0004\n  HSI: 0.0003\n\u2705 Suggested Index: S&P 500"
+  },
+  {
+    "user_input": "give me list of all the stocks",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to help with that. Try asking about gains, drops, volatility, or stock index suggestions."
+  },
+  {
+    "user_input": "give me the available stocks ",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to help with that. Try asking about gains, drops, volatility, or stock index suggestions."
+  },
+  {
+    "user_input": "show me some stocks",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to help with that. Try asking about gains, drops, volatility, or stock index suggestions."
+  },
+  {
+    "user_input": "give me list of all the stocks",
+    "intent": "list_stocks",
+    "response": "\ud83d\udcd8 This dataset includes market indices only: S&P 500, DJIA, and HSI \u2014 not individual stocks."
+  },
+  {
+    "user_input": "give me list of all the stocks",
+    "intent": "list_stocks",
+    "response": "\ud83d\udcd8 This dataset includes market indices only: S&P 500, DJIA, and HSI \u2014 not individual stocks."
+  },
+  {
+    "user_input": "give me list of all the stocks",
+    "intent": "list_stocks",
+    "response": "\ud83d\udcd8 This dataset includes market indices only: S&P 500, DJIA, and HSI \u2014 not individual stocks."
+  },
+  {
+    "user_input": "What was the average S&P 500 value in the recovery year after COVID?",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to help with that. Try asking about gains, drops, volatility, or stock index suggestions."
+  },
+  {
+    "user_input": "Which year had the highest single-day stock market bounce since 2008?",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to help with that. Try asking about gains, drops, volatility, or stock index suggestions."
+  },
+  {
+    "user_input": "How did the market behave during the first year of the Ukraine conflict?",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to help with that. Try asking about gains, drops, volatility, or stock index suggestions."
+  },
+  {
+    "user_input": "What was the average S&P 500 in the last 3 years?",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to help with that. Try asking about gains, drops, volatility, or stock index suggestions."
+  },
+  {
+    "user_input": "Was 2022 more volatile than 2008?",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to help with that. Try asking about gains, drops, volatility, or stock index suggestions."
+  },
+  {
+    "user_input": "Between 2019 and 2021, which index gave better daily returns?",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to help with that. Try asking about gains, drops, volatility, or stock index suggestions."
+  },
+  {
+    "user_input": "Which index performed best just before a major crash?",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to help with that. Try asking about gains, drops, volatility, or stock index suggestions."
+  },
+  {
+    "user_input": "What would\u2019ve been the best time to buy DJIA for short-term profit?",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to help with that. Try asking about gains, drops, volatility, or stock index suggestions."
+  },
+  {
+    "user_input": "What would\u2019ve been the best time to buy DJIA for short-term profit?",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to help with that. Try asking about gains, drops, volatility, or stock index suggestions."
+  },
+  {
+    "user_input": "What was the average S&P 500 in the last 3 years?",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to help with that. Try asking about gains, drops, volatility, or stock index suggestions."
+  },
+  {
+    "user_input": "What would\u2019ve been the best time to buy DJIA for short-term profit?",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to answer that. Try asking about stock trends, index performance, or specific years."
+  },
+  {
+    "user_input": "What was the average S&P 500 in the last 3 years?",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to answer that. Try asking about stock trends, index performance, or specific years."
+  },
+  {
+    "user_input": "What would\u2019ve been the best time to buy DJIA for short-term profit?",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to answer that (intent: unknown). Try asking about stock trends, index performance, or specific years."
+  },
+  {
+    "user_input": "Which index performed best just before a major crash?",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to answer that (intent: unknown). Try asking about stock trends, index performance, or specific years."
+  },
+  {
+    "user_input": "suggest me some stocks",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to answer that (intent: unknown). Try asking about stock trends, index performance, or specific years."
+  },
+  {
+    "user_input": "suggest me some stoc*ks",
+    "intent": "recommend_stock",
+    "response": "\ud83d\udcc8 Based on daily returns, 'S&P 500' performed best.\nReturns:\n  S&P 500: 0.0004\n  DJIA: 0.0004\n  HSI: 0.0003\n\u2705 Suggested Index: S&P 500"
+  },
+  {
+    "user_input": "Which index performed best just before a major crash?",
+    "intent": "compare_averages",
+    "response": "\ud83d\udcc9 To compare averages, please ask about two years like 'Compare 2015 and 2020'."
+  },
+  {
+    "user_input": "What was the average S&P 500 in the last 3 years?",
+    "intent": "compare_averages",
+    "response": "\ud83d\udcc9 To compare averages, please ask about two years like 'Compare 2015 and 2020'."
+  },
+  {
+    "user_input": "What was the average S&P 500 in the last 3 years?",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to help with that. Try asking about gains, drops, volatility, or stock index suggestions."
+  },
+  {
+    "user_input": "Which index performed best just before a major crash?",
+    "intent": "unknown",
+    "response": "\ud83e\udd16 I'm not sure how to help with that. Try asking about gains, drops, volatility, or stock index suggestions."
+  },
+  {
+    "user_input": "suggest me some stoc*ks",
+    "intent": "recommend_stock",
+    "response": "\ud83d\udcc8 Based on daily returns, 'S&P 500' performed best.\nReturns:\n  S&P 500: 0.0004\n  DJIA: 0.0004\n  HSI: 0.0003\n\u2705 Suggested Index: S&P 500"
+  }
+]
