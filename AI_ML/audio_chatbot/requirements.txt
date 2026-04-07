@@ -1,0 +1,8 @@
+pyttsx3
+SpeechRecognition
+PyAudio
+google-genai
+dotenv
+boto3
+botocore
+python-dotenv
