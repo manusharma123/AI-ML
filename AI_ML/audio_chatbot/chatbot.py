@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 import boto3
 from botocore.exceptions import ClientError
-from text_seech_text import text_to_speech, speech_to_text
+from text_speech_text import text_to_speech, speech_to_text
 
 # Load environment variables from .env file
 load_dotenv()
@@ -10,7 +10,7 @@ load_dotenv()
 # Retrieve AWS credentials and model ID
 aws_access_key_id = os.getenv("access_key")
 aws_secret_access_key = os.getenv("secret_key")
-model_id = "us.anthropic.claude-sonnet-4-20250514-v1:0"
+model_id = "us.anthropic.claude-3-5-haiku-20241022-v1:0"
 
 # Create a Bedrock Runtime client in the AWS Region you want to use.
 client = boto3.client(

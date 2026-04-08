@@ -19,19 +19,38 @@ def text_to_speech(text):
     engine.say(text)
     engine.runAndWait()
 
-def speech_to_text():
+def speech_to_text(max_attempts=3):
     recognizer = sr.Recognizer()
-    with sr.Microphone() as source:
-        print("Listening... Speak now.")
-        try:
-            audio = recognizer.listen(source)
-            text = recognizer.recognize_google(audio)
-            print(f"You said: {text}")
-            return text
-        except sr.UnknownValueError:
-            text_to_speech("Sorry, could not understand what you said. I will try to listen once again.")
-        except sr.RequestError as e:
-            print(f"Could not request results; {e}")
+
+    recognizer.pause_threshold = 1.2
+    recognizer.energy_threshold = 300
+    recognizer.dynamic_energy_threshold = True
+
+    attempt = 0
+
+    while attempt < max_attempts:
+        with sr.Microphone() as source:
+            print(f"Listening... (Attempt {attempt + 1}/{max_attempts})")
+
+            recognizer.adjust_for_ambient_noise(source, duration=1)
+
+            try:
+                audio = recognizer.listen(source)
+                text = recognizer.recognize_google(audio)
+                print(f"You said: {text}")
+                return text  # ✅ Success → exit function
+
+            except sr.UnknownValueError:
+                attempt += 1
+                if attempt < max_attempts:
+                    text_to_speech("I couldn't understand you. Please try again.")
+                else:
+                    text_to_speech("Sorry, I couldn't understand you after multiple attempts. Please try again later.")
+            except sr.RequestError as e:
+                print(f"Speech recognition service error: {e}")
+                break  # API error → stop immediately
+    return None
+
 
 if __name__ == "__main__":
     while True:
