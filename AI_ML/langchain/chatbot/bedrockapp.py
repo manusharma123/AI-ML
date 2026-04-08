@@ -1,15 +1,17 @@
 import os
 from dotenv import load_dotenv
 import streamlit as st
-from langchain_openai import AzureChatOpenAI
+# from langchain_openai import AzureChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+from langchain_aws import ChatBedrock
 
 # Function to load and validate environment variables
 def load_env_variables():
     load_dotenv()
-    os.environ["AZURE_OPENAI_KEY"] = os.getenv("AZURE_OPENAI_KEY", "default_value")
-    os.environ["AZURE_OPENAI_ENDPOINT"] = os.getenv("AZURE_OPENAI_ENDPOINT", "default_value")
+    os.environ["BEDROCK_AWS_REGION"] = os.getenv("BEDROCK_AWS_REGION", "default_value")
+    os.environ["BEDROCK_AWS_ACCESS_KEY_ID"] = os.getenv("BEDROCK_AWS_ACCESS_KEY_ID", "default_value")
+    os.environ["BEDROCK_AWS_SECRET_ACCESS_KEY"] = os.getenv("BEDROCK_AWS_SECRET_ACCESS_KEY", "default_value")
     os.environ["LANGCHAIN_TRACING_V2"] = "true"
     os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGCHAIN_API_KEY", "default_value")
 
@@ -24,11 +26,11 @@ def create_prompt_template():
 
 # Function to initialize the Azure OpenAI LLM
 def initialize_llm():
-    return AzureChatOpenAI(
-        azure_deployment="gpt-5-mini",
-        api_version="2025-08-07",
-        temperature=0.9,
-        timeout=None
+    return ChatBedrock(
+        region_name=os.getenv("BEDROCK_AWS_REGION"),
+        aws_access_key_id=os.getenv("BEDROCK_AWS_ACCESS_KEY_ID"),
+        aws_secret_access_key=os.getenv("BEDROCK_AWS_SECRET_ACCESS_KEY"),
+        model_id = "us.anthropic.claude-3-5-haiku-20241022-v1:0"
     )
 
 # Main function to run the Streamlit app

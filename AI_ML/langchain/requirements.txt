@@ -2,3 +2,9 @@ langchain_openai
 langchain_core
 python-dotenv
 streamlit
+langchain-aws
+boto3
+fastapi 
+uvicorn 
+openai 
+pydantic
