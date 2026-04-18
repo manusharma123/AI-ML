@@ -7,9 +7,13 @@ from torch.nn.functional import cosine_similarity
 from datetime import datetime
 import os
 import logging
+import pygame
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Initialize pygame mixer
+pygame.mixer.init()
 
 # Models
 mtcnn = MTCNN(image_size=160, margin=20)
@@ -48,6 +52,17 @@ def save_intruder_image(frame, directory="intruders"):
         logging.info(f"Intruder image saved: {filename}")
     except Exception as e:
         logging.error(f"Failed to save intruder image: {e}")
+
+def play_alert_sound(sound_file, repeat=3):
+    """Play an alert sound a specified number of times."""
+    try:
+        for _ in range(repeat):
+            pygame.mixer.music.load(sound_file)
+            pygame.mixer.music.play()
+            while pygame.mixer.music.get_busy():
+                pygame.time.Clock().tick(10)
+    except Exception as e:
+        logging.error(f"Failed to play alert sound: {e}")
 
 def main():
     """Main function to monitor and detect unauthorized access."""
@@ -95,6 +110,7 @@ def main():
 
                     if elapsed > 5 and not warning_triggered:
                         save_intruder_image(frame)
+                        play_alert_sound("fahhh_KcgAXfs.mp3")
                         logging.warning("⚠️ Unauthorized access detected!")
                         warning_triggered = True
             else:

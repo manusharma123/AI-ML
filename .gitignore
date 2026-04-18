@@ -49,3 +49,10 @@ env/
 *.csv
 *.json
 *.log
+
+# Ignore authorized embeddings
+*.pt
+
+# Ignore images
+*.jpg
+*.jpeg
