@@ -38,6 +38,7 @@ def is_authorized(face_embedding, authorized_embeddings, threshold=0.7):
     """Check if the face embedding matches any authorized embedding."""
     for authorized_embedding in authorized_embeddings:
         similarity = cosine_similarity(face_embedding, authorized_embedding).item()
+        print(f"Similarity: {similarity:.4f}")
         if similarity > threshold:
             return True
     return False
