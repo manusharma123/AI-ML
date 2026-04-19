@@ -1,5 +1,7 @@
 from agent.deepsearch_agent import  build_search_agent , writer_chain , critic_chain
 from rich import print
+
+
 def run_research_pipeline(topic : str) -> dict:
 
     state = {}
@@ -18,8 +20,7 @@ def run_research_pipeline(topic : str) -> dict:
 
     print("\n search result ",state['search_results'])
 
-    #step 3 - writer chain 
-
+    #writer chain 
     print("\n"+" ="*50)
     print("step 2 - Writer is drafting the report ...")
     print("="*50)
@@ -37,15 +38,15 @@ def run_research_pipeline(topic : str) -> dict:
 
     #critic report 
 
-    print("\n"+" ="*50)
-    print("step 3 - critic is reviewing the report ")
-    print("="*50)
+    # print("\n"+" ="*50)
+    # print("step 3 - critic is reviewing the report ")
+    # print("="*50)
 
-    state["feedback"] = critic_chain.invoke({
-        "report":state['report']
-    })
+    # state["feedback"] = critic_chain.invoke({
+    #     "report":state['report']
+    # })
 
-    print("\n critic report \n", state['feedback'])
+    # print("\n critic report \n", state['feedback'])
 
     return state
 

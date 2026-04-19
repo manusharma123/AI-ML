@@ -34,9 +34,12 @@ def capture_face():
 
             if cv2.waitKey(1) & 0xFF == ord('s'):
                 face = mtcnn(frame)
+                # print(face.shape)
                 if face is not None:
                     logging.info("Face detected successfully.")
+                    # print(face.unsqueeze(0).shape)
                     embedding = model(face.unsqueeze(0))
+                    # print(embedding.shape)
                     return embedding
                 else:
                     logging.warning("No face detected. Please try again.")

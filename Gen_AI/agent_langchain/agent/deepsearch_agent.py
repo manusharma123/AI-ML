@@ -13,11 +13,11 @@ load_dotenv()
 def initialize_llm():
     """Initialize Azure OpenAI Chat Model"""
     return AzureChatOpenAI(
-        model=os.environ["MODEL_NAME"],
-        azure_endpoint=os.environ["AZURE_ENDPOINT"],
-        api_key=os.environ["AZURE_API_KEY"],
-        api_version=os.environ["API_VERSION"],
-        deployment_name=os.environ["DEPLOYMENT_NAME"],
+        model=os.getenv("MODEL_NAME"),
+        azure_endpoint=os.getenv("AZURE_ENDPOINT"),
+        api_key=os.getenv("AZURE_API_KEY"),
+        api_version=os.getenv("API_VERSION"),
+        deployment_name=os.getenv("DEPLOYMENT_NAME"),
         temperature=0.7
     )
 

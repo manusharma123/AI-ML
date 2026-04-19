@@ -38,6 +38,7 @@ def is_authorized(face_embedding, authorized_embeddings, threshold=0.7):
     """Check if the face embedding matches any authorized embedding."""
     for authorized_embedding in authorized_embeddings:
         similarity = cosine_similarity(face_embedding, authorized_embedding).item()
+        print(f"Similarity: {similarity:.4f}")
         if similarity > threshold:
             return True
     return False
@@ -110,7 +111,7 @@ def main():
 
                     if elapsed > 5 and not warning_triggered:
                         save_intruder_image(frame)
-                        play_alert_sound("fahhh_KcgAXfs.mp3")
+                        # play_alert_sound("fahhh_KcgAXfs.mp3")
                         logging.warning("⚠️ Unauthorized access detected!")
                         warning_triggered = True
             else:
