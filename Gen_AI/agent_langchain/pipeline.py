@@ -1,40 +1,50 @@
-from agent.deepsearch_agent import  build_search_agent , writer_chain , critic_chain
+from agent.deepsearch_agent import build_search_agent, writer_chain, critic_chain
+from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_community.chat_message_histories import ChatMessageHistory
+from langchain_core.chat_history import BaseChatMessageHistory
+from langchain_core.runnables.history import RunnableWithMessageHistory
+from agent.memory import get_session_history
 from rich import print
 
 
-def run_research_pipeline(topic : str) -> dict:
+store={}
+config = {"configurable": {"session_id": "chat1"}}
 
+def run_research_pipeline(topic: str) -> dict:
     state = {}
 
-    #search agent working 
-    print("\n"+" ="*50)
-    print("step 1 - search agent is working ...")
-    print("="*50)
+    # search agent working
+    print("\n" + " =" * 50)
+    print("Deepsearch agent is working ...")
+    print("=" * 50)
 
     search_agent = build_search_agent()
     search_result = search_agent.invoke({
-        "messages" : [("user", f"Find recent, reliable and detailed information about: {topic}")]
-    })
-    # print("\n search agent output \n", search_result)
+        "messages": [
+            SystemMessage(content="you are my personal assistant that provides helpful information by doing web searches."),
+            HumanMessage(content=f"{topic}")]
+    },config=config)
     state["search_results"] = search_result['messages'][-1].content
 
-    print("\n search result ",state['search_results'])
+    print("\n search result ", state['search_results'])
 
-    #writer chain 
-    print("\n"+" ="*50)
-    print("step 2 - Writer is drafting the report ...")
-    print("="*50)
+    # writer chain
+    # print("\n" + " =" * 50)
+    # print("Generating Report: In progress ...")
+    # print("=" * 50)
 
     research = (
         f"SEARCH RESULTS : \n {state['search_results']} \n\n"
     )
+    # with_message_history = RunnableWithMessageHistory(writer_chain, get_session_history, input_messages_key="topic")
+    
+    # config = {"configurable":{"session_id": "chat1"}}
+    # state["report"] = writer_chain.invoke({
+    #     "topic": topic,
+    #     "research": research
+    # })
 
-    state["report"] = writer_chain.invoke({
-        "topic" : topic,
-        "research" : research
-    })
-
-    print("\n Final Report\n",state['report'])
+    # print("\n Final Report\n", state["report"])
 
     #critic report 
 
@@ -50,8 +60,10 @@ def run_research_pipeline(topic : str) -> dict:
 
     return state
 
-
-
 if __name__ == "__main__":
-    topic = input("\n Enter a research topic : ")
-    run_research_pipeline(topic)
+    while True:
+        topic = input("\n Enter a research topic (or type 'exit' to quit): ")
+        if topic.lower() == 'exit':
+            print("Exiting the session. Goodbye!")
+            break
+        run_research_pipeline(topic)

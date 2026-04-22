@@ -3,6 +3,8 @@ from langchain.agents import create_agent
 from agent.deepsearch import web_search
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables.history import RunnableWithMessageHistory
+from agent.memory import get_session_history
 from dotenv import load_dotenv
 import os
 
@@ -31,28 +33,25 @@ def create_prompt_template():
     )
 
 def build_search_agent():
-    return create_agent(
+    agent = create_agent(
         model = initialize_llm(),
         tools= [web_search]
     )
+    return RunnableWithMessageHistory(
+        agent,
+        get_session_history,
+        input_messages_key="messages"
+    )
+
 
 writer_prompt = ChatPromptTemplate.from_messages([
-    ("system", "You are an expert research writer. Your goal is to produce clear, structured, and insightful reports that adhere to the highest standards of accuracy, ethics, and professionalism. Always prioritize factual accuracy, transparency in methodology, and ethical considerations when presenting information."),
-    ("human", """Write a detailed research report on the topic below.
+    ("system", "You are a weather assistant which provide only weather related information to user. Your goal is to produce clear, structured, and insightful reports that adhere to the highest standards of accuracy, ethics, and professionalism."),
+    ("human", """Write a detailed research report on the topic below.use the provided research gathered only if its relevant to the topic.
 
 Topic: {topic}
 
 Research Gathered:
 {research}
-
-Structure the report as:
-- Introduction
-- Key Findings (minimum 3 well-explained points)
-- Methodology (explain how sources were selected, weighted, and verified; include any limitations or biases in the data)
-- Ethical Considerations (highlight any ethical concerns, such as privacy, bias, or misinformation risks, and how they were addressed)
-- Primary Documents (quote or attach key documents like notifications, FIRs, etc.)
-- Conclusion
-- Sources (list all URLs found in the research, with timestamps and retrieval details)
 
 Be detailed, factual, and professional. Highlight causal relationships, provide alternative explanations where applicable, and ensure transparency in your reasoning."""),
 ])
