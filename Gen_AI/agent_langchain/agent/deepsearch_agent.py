@@ -1,3 +1,4 @@
+from agent.rag import build_rag_chain
 from langchain_openai import AzureChatOpenAI
 from langchain.agents import create_agent
 from agent.deepsearch import web_search
@@ -6,22 +7,12 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from agent.memory import get_session_history
 from dotenv import load_dotenv
+from agent.utils import initialize_llm
 import os
 
 # Load environment variables
 load_dotenv()
 
-
-def initialize_llm():
-    """Initialize Azure OpenAI Chat Model"""
-    return AzureChatOpenAI(
-        model=os.getenv("MODEL_NAME"),
-        azure_endpoint=os.getenv("AZURE_ENDPOINT"),
-        api_key=os.getenv("AZURE_API_KEY"),
-        api_version=os.getenv("API_VERSION"),
-        deployment_name=os.getenv("DEPLOYMENT_NAME"),
-        temperature=0.7
-    )
 
 def create_prompt_template():
     """Create chat prompt"""
@@ -41,6 +32,17 @@ def build_search_agent():
         agent,
         get_session_history,
         input_messages_key="messages"
+    )
+
+
+def build_rag_agent():
+    rag_chain = build_rag_chain()
+
+    return RunnableWithMessageHistory(
+        rag_chain,
+        get_session_history,
+        input_messages_key="question",
+        history_messages_key="chat_history"
     )
 
 

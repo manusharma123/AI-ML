@@ -1,5 +1,6 @@
 from agent.deepsearch_agent import build_search_agent, writer_chain, critic_chain
 from langchain_core.messages import HumanMessage, SystemMessage
+from agent.rag import build_rag_chain
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
@@ -63,16 +64,15 @@ def run_research_pipeline(topic: str) -> dict:
     state["search_results"] = search_result['messages'][-1].content
 
     print("\n search result ", state['search_results'])
-    print("message history ", get_session_history("chat1").messages)
 
     # writer chain
     # print("\n" + " =" * 50)
     # print("Generating Report: In progress ...")
     # print("=" * 50)
 
-    research = (
-        f"SEARCH RESULTS : \n {state['search_results']} \n\n"
-    )
+    # research = (
+    #     f"SEARCH RESULTS : \n {state['search_results']} \n\n"
+    # )
     # with_message_history = RunnableWithMessageHistory(writer_chain, get_session_history, input_messages_key="topic")
     
     # config = {"configurable":{"session_id": "chat1"}}
@@ -97,10 +97,28 @@ def run_research_pipeline(topic: str) -> dict:
 
     return state
 
+def rag_pipeline(question: str) -> dict:
+    state = {}
+    print("\n" + " =" * 50)
+    print("RAG agent is working ...")
+    print("=" * 50)
+
+    config = {"configurable": {"session_id": "wizard_chat"}}
+    rag_chain = build_rag_chain()
+    state["answer"] = rag_chain.invoke(question, config=config)
+
+    print("\n RAG answer ", state['answer'])
+    return state
+
 if __name__ == "__main__":
     while True:
         topic = input("\n Enter a research topic (or type 'exit' to quit): ")
         if topic.lower() == 'exit':
-            print("Exiting the session. Goodbye!")
+            while True:
+                question = input("\n Enter a question for RAG chatbot (or type 'n' to quit): ")
+                if question.lower() == 'n':
+                    print("Exiting the session. Goodbye!")
+                    break
+                rag_pipeline(question)
             break
         run_research_pipeline(topic)
