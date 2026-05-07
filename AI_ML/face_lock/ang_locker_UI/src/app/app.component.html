@@ -1,0 +1,38 @@
+<h1>Face Lock Application</h1>
+
+<hr />
+
+<!-- PAGE 1 -->
+<h2>Lock / Unlock Folder</h2>
+
+<input
+  type="file"
+  webkitdirectory
+  directory
+  (change)="onFolderSelect($event)"
+/>
+
+<br /><br />
+
+<input
+  type="text"
+  [(ngModel)]="folderPath"
+  placeholder="Enter folder path"
+/>
+
+<br /><br />
+
+<button (click)="lock()">Lock</button>
+<button (click)="unlock()">Unlock</button>
+
+<p>{{ message }}</p>
+
+<hr />
+
+<h2>All Documents</h2>
+
+<div *ngIf="documents.length === 0">No documents found</div>
+
+<pre *ngIf="documents.length > 0">
+{{ documents | json }}
+</pre>

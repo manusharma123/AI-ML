@@ -56,3 +56,13 @@ env/
 # Ignore images
 *.jpg
 *.jpeg
+
+# Angular
+AI_ML/face_lock/ang_locker_UI/node_modules/
+AI_ML/face_lock/ang_locker_UI/dist/
+AI_ML/face_lock/ang_locker_UI/.angular/
+AI_ML/face_lock/ang_locker_UI/.angular/cache/
+AI_ML/face_lock/ang_locker_UI/npm-debug.log
+AI_ML/face_lock/ang_locker_UI/yarn-error.log
+AI_ML/face_lock/ang_locker_UI/coverage/
+AI_ML/face_lock/ang_locker_UI/*.log

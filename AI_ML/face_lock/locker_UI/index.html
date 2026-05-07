@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Face Lock Application</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <nav>
+    <h1>Face Lock Application</h1>
+  </nav>
+
+  <main>
+
+    <!-- ================= PAGE 1 ================= -->
+    <section id="page1">
+      <h2>Folder Lock & Unlock</h2>
+
+      <!-- Folder Selection -->
+      <div class="folder-select">
+        <label><strong>Select Folder:</strong></label><br />
+
+        <!-- Browse option -->
+        <input
+          type="file"
+          id="folderBrowser"
+          webkitdirectory
+          directory
+          onchange="setFolderPathFromBrowse()"
+        />
+
+        <!-- Text input option -->
+        <input
+          type="text"
+          id="folderPath"
+          placeholder="Or enter folder path manually"
+        />
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button onclick="lockFolder()">🔒 Lock Folder</button>
+        <button onclick="unlockFolder()">🔓 Unlock Folder</button>
+      </div>
+
+      <div id="lockResult"></div>
+    </section>
+
+    <hr />
+
+    <!-- ================= PAGE 2 ================= -->
+    <section id="page2">
+      <h2>All Folders / Documents</h2>
+
+      <pre id="documentResult">
+Loading documents...
+      </pre>
+    </section>
+
+  </main>
+  <script src="app.js"></script>
+
+  <!-- Small helper for folder browse -->
+  <script>
+    function setFolderPathFromBrowse() {
+      const input = document.getElementById('folderBrowser');
+      if (input.files.length > 0) {
+        // Extract folder path (best effort for browser)
+        const fullPath = input.files[0].webkitRelativePath;
+        const folderPath = fullPath.split('/')[0];
+        document.getElementById('folderPath').value = folderPath;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -8,6 +8,7 @@ from datetime import datetime
 import os
 import logging
 import pygame
+from folder_locker import unlock_folder
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -98,6 +99,8 @@ def main(path=None):
                 if is_authorized(emb, authorized_embeddings):
                     if not authorized_present_before:
                         logging.info("✅ Authorized user detected.")
+                        unlock_folder(path)
+                        break
                     authorized_present_before = True
                     unknown_start_time = None
                     warning_triggered = False

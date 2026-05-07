@@ -1,0 +1,64 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+nav {
+  background: #333;
+  color: #fff;
+  padding: 1em;
+}
+nav h1 {
+  margin: 0;
+  display: inline;
+}
+nav ul {
+  display: inline;
+  list-style: none;
+  margin-left: 2em;
+  padding: 0;
+}
+nav ul li {
+  display: inline;
+  margin-right: 1em;
+}
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+main {
+  padding: 2em;
+}
+section {
+  background: #fff;
+  margin-bottom: 2em;
+  padding: 1em;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+button {
+  margin: 0.5em 0.5em 0.5em 0;
+  padding: 0.5em 1em;
+  border: none;
+  background: #007bff;
+  color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+}
+button:hover {
+  background: #0056b3;
+}
+input[type=\"text\"] {
+  padding: 0.5em;
+  width: 300px;
+  margin-right: 1em;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 0.5em;
+  border-bottom: 1px solid #ccc;
+}

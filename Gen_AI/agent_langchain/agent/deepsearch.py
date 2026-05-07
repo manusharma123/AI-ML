@@ -40,5 +40,5 @@ def scrape_url(url: str, verify_ssl: bool = True) -> str:
     except Exception as e:
         return f"Could not scrape URL: {str(e)}"
     
-# print(web_search.invoke("latest Noida protest report "))
+# print(web_search.invoke("latest news on kedarnath temple devotees condition?"))
 # print(scrape_url("https://www.bbc.com/news/topics/cx2jyv8j8gwt", verify_ssl=False))
