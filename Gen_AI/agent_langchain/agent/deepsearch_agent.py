@@ -1,5 +1,4 @@
 from agent.rag import build_rag_chain
-from langchain_openai import AzureChatOpenAI
 from langchain.agents import create_agent
 from agent.deepsearch import web_search
 from langchain_core.prompts import ChatPromptTemplate
