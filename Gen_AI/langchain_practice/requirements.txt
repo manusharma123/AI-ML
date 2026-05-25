@@ -17,3 +17,7 @@ pymongo
 
 langchain-aws
 boto3
+
+#fastapi
+fastapi
+uvicorn
