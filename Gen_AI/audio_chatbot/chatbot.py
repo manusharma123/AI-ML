@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 import boto3
 from botocore.exceptions import ClientError
-from text_speech_text import text_to_speech, speech_to_text
+from text_speech_text import SpeechAssistant
 
 # Load environment variables from .env file
 load_dotenv()
@@ -50,14 +50,15 @@ def get_chatbot_response(user_message):
 
 def main():
     print("Chatbot initialized. Say 'exit' to quit.")
+    assistant = SpeechAssistant()
     while True:
-        user_input = speech_to_text()
+        user_input = assistant.speech_to_text()
         if user_input.lower() == 'exit':
             print("Goodbye!")
             break
         response = get_chatbot_response(user_input)
         print(f"Chatbot: {response}")
-        text_to_speech(response)
+        assistant.text_to_speech(response)
 
 if __name__ == "__main__":
     main()

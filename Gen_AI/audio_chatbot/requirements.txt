@@ -6,3 +6,4 @@ dotenv
 boto3
 botocore
 python-dotenv
+rich>=13.7.0

@@ -1,71 +1,95 @@
 import pyttsx3
 import speech_recognition as sr
+from rich import print
 
-def text_to_speech(text):
-    # Initialize the text-to-speech engine
-    engine = pyttsx3.init()
 
-    # Get available voices
-    voices = engine.getProperty('voices')
+class SpeechAssistant:
 
-    # Set a specific voice (e.g., female voice)
-    engine.setProperty('voice', voices[1].id)  # Change index to 0 for male voice
 
-    # Set properties before adding anything to the queue
-    engine.setProperty('rate', 170)  # Slower speed for better fluency
-    engine.setProperty('volume', 1.0)  # Maximum volume for clarity
+    def text_to_speech(self, text):
+        """Convert text to speech"""
+        engine = pyttsx3.init()
+        voices = engine.getProperty('voices')
+        engine.setProperty('voice', voices[1].id)  # female (try 0 for male)
+        engine.setProperty('rate', 170)
+        engine.setProperty('volume', 1.0)
+        print(f"Assistant: {text}")
+        engine.say(text)
+        engine.runAndWait()
 
-    # Speak the text
-    engine.say(text)
-    engine.runAndWait()
+    def speech_to_text(self, max_attempts=3):
+        """Convert speech to text with retries"""
+        recognizer = sr.Recognizer()
+        recognizer.pause_threshold = 1.2
+        recognizer.energy_threshold = 300
+        recognizer.dynamic_energy_threshold = True
+        attempt = 0
 
-def speech_to_text(max_attempts=3):
-    recognizer = sr.Recognizer()
+        while attempt < max_attempts:
+            with sr.Microphone() as source:
+                print(f"Listening... (Attempt {attempt + 1}/{max_attempts})")
 
-    recognizer.pause_threshold = 1.2
-    recognizer.energy_threshold = 300
-    recognizer.dynamic_energy_threshold = True
+                # Adjust noise
+                recognizer.adjust_for_ambient_noise(source, duration=1)
 
-    attempt = 0
+                try:
+                    audio = recognizer.listen(
+                        source,
+                        timeout=5,
+                        phrase_time_limit=8
+                    )
 
-    while attempt < max_attempts:
-        with sr.Microphone() as source:
-            print(f"Listening... (Attempt {attempt + 1}/{max_attempts})")
+                    text = recognizer.recognize_google(audio)
+                    print(f"You said: {text}")
+                    return text
 
-            recognizer.adjust_for_ambient_noise(source, duration=1)
+                except sr.WaitTimeoutError:
+                    print("Listening timed out. No speech detected.")
+                    attempt += 1
 
-            try:
-                audio = recognizer.listen(source)
-                text = recognizer.recognize_google(audio)
-                print(f"You said: {text}")
-                return text  # ✅ Success → exit function
+                except sr.UnknownValueError:
+                    attempt += 1
+                    if attempt < max_attempts:
+                        self.text_to_speech("I couldn't understand you. Please try again.")
+                    else:
+                        self.text_to_speech("Sorry, I couldn't understand you after multiple attempts.")
 
-            except sr.UnknownValueError:
-                attempt += 1
-                if attempt < max_attempts:
-                    text_to_speech("I couldn't understand you. Please try again.")
-                else:
-                    text_to_speech("Sorry, I couldn't understand you after multiple attempts. Please try again later.")
-            except sr.RequestError as e:
-                print(f"Speech recognition service error: {e}")
-                break  # API error → stop immediately
-    return None
+                except sr.RequestError as e:
+                    print(f"API Error: {e}")
+                    self.text_to_speech("Speech service is unavailable.")
+                    break
+
+        return None
 
 
 if __name__ == "__main__":
+    assistant = SpeechAssistant()
+
     while True:
         try:
-            choice = input("Choose an option: (1) Text-to-Speech, (2) Speech-to-Text, (type 'exit' to quit): ")
+            choice = input(
+                "\nChoose an option:\n"
+                "1 → Text-to-Speech\n"
+                "2 → Speech-to-Text\n"
+                "Type 'exit' to quit\n> "
+            ).strip().lower()
+
             if choice == '1':
-                text = input("Enter the text you want to convert to speech: ")
-                text_to_speech(text)
+                text = input("Enter text: ")
+                assistant.text_to_speech(text)
+
             elif choice == '2':
-                speech_to_text()
-            elif choice.lower() == 'exit':
-                print("Exiting the program. Goodbye!")
+                assistant.speech_to_text()
+
+            elif choice == 'exit':
+                assistant.text_to_speech("Goodbye!")
+                print("Exiting program.")
                 break
+
             else:
-                print("Invalid choice. Please select 1, 2, or 'exit'.")
+                print("Invalid choice. Please enter 1, 2, or 'exit'.")
+
         except KeyboardInterrupt:
-            print("\nProgram terminated by user. Goodbye!")
+            print("\nProgram interrupted.")
+            assistant.text_to_speech("Goodbye!")
             break
