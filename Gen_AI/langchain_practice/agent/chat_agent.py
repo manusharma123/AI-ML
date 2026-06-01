@@ -9,10 +9,8 @@ from agent.tools.lifestyletool import lifestyle_analysis
 from agent.tools.employementtool import career_analysis
 from agent.tools.financialtool import finance_analysis
 from agent.tools.scienarioSimulationtool import scenario_simulator
-
 import aws_llm_config as aws_llm_config
 from langchain.tools import tool
-from langchain_core.runnables.history import RunnableWithMessageHistory
 
 # Load environment variables
 load_dotenv()

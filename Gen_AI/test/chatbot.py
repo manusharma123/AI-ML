@@ -1,42 +1,47 @@
+# Use the Conversation API to send a text message to Anthropic Claude
+# and print the response stream.
 
+import boto3
+from botocore.exceptions import ClientError
 import os
-from openai import AzureOpenAI
-import dotenv 
+from dotenv import load_dotenv
 
 # Load environment variables from .env file
-dotenv.load_dotenv()
+load_dotenv()
 
-# User-friendly: Read sensitive info from environment variables
-endpoint = os.getenv("AZURE_OPENAI_ENDPOINT", "https://pstestopenaidply-mp3wuiuejkox2a.openai.azure.com/")
-deployment = os.getenv("AZURE_OPENAI_DEPLOYMENT", "pstestopenaidply-mp3wuiuejkox2a")
-api_version = os.getenv("AZURE_OPENAI_API_VERSION", "2025-04-01-preview")
-subscription_key = os.getenv("AZURE_OPENAI_KEY")  # Must be set in environment
+# Create a Bedrock Runtime client in the AWS Region you want to use.
+client = boto3.client("bedrock-runtime", region_name=os.getenv("BEDROCK_AWS_REGION"),
+        aws_access_key_id=os.getenv("BEDROCK_AWS_ACCESS_KEY_ID"),
+        aws_secret_access_key=os.getenv("BEDROCK_AWS_SECRET_ACCESS_KEY"))
 
-def main():
-    if not subscription_key:
-        print("Error: Please set the AZURE_OPENAI_KEY environment variable for your API key.")
-        return
+# Set the model ID, e.g., Claude 3 Haiku.
+model_id = "anthropic.claude-3-haiku-20240307-v1:0"
 
-    user_input = input("Ask the assistant anything: ")
+# Start a conversation with the user message.
+user_message = "Describe the purpose of a 'hello world' program in one line."
+conversation = [
+    {
+        "role": "user",
+        "content": [{"text": user_message}],
+    }
+]
 
-    client = AzureOpenAI(
-        api_version=api_version,
-        azure_endpoint=endpoint,
-        api_key=subscription_key,
+try:
+    # Send the message to the model, using a basic inference configuration.
+    streaming_response = client.converse_stream(
+        modelId=model_id,
+        messages=conversation,
+        inferenceConfig={"maxTokens": 512, "temperature": 0.5, "topP": 0.9},
     )
 
-    try:
-        response = client.chat.completions.create(
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": user_input}
-            ],
-            max_completion_tokens=1024,
-            model=deployment
-        )
-        print("\nAssistant:", response.choices[0].message.content)
-    except Exception as e:
-        print("An error occurred:", e)
+    # Extract and print the streamed response text in real-time.
+    for chunk in streaming_response["stream"]:
+        if "contentBlockDelta" in chunk:
+            text = chunk["contentBlockDelta"]["delta"]["text"]
+            print(text, end="")
 
-if __name__ == "__main__":
-    main()
+except (ClientError, Exception) as e:
+    print(f"ERROR: Can't invoke '{model_id}'. Reason: {e}")
+    exit(1)
+
+

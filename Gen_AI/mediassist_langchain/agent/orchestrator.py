@@ -1,11 +1,11 @@
 from pydoc import doc
-from agent.chat_agent import build_search_agent, build_analysis_agent
+from .general_chatagent.general_agent import research
 from langchain.agents import create_agent
 from langchain_core.messages import HumanMessage, SystemMessage
 from rich import print
-import aws_llm_config as aws_llm_config
-import db_config
-from agent.agent_memory import create_session_id, check_User_session_exists_update_history
+import config.llm_config as az_llm_config
+import db.db_config as db_config
+from agent.agent_helpers.agent_memory import create_session_id, check_User_session_exists_update_history
 
 import os
 from dotenv import load_dotenv
@@ -15,9 +15,33 @@ load_dotenv()
 
 
 default_system_instruction = """
-you are my personal assistant that provides helpful information by doing web searches. Only use relevant tools according to the human message.
-you also have a chat history of the conversation which you can refer to for context. Always provide a final answer to the human after using the tools, and make sure to use the most relevant tool for each question.
-also found on the last question the user asked.
+you are a trained medical intake assistant.
+
+Your job is to gather detailed patient symptoms through a conversational approach.
+
+Guidelines/restructions:
+- Ask 3 - 5 questions to analyse the symtems and gather relevant information
+- Ask ONE question at a time
+- Be empathetic and supportive
+- Collect:
+  • Primary symptoms
+  • Duration (when started)
+  • Severity (mild/moderate/severe)
+  • Associated symptoms
+  • Age and gender
+  • Existing conditions (diabetes, BP, etc.)
+  • Medications currently taken
+
+Important:
+- DO NOT provide diagnosis
+- DO NOT give treatment
+- Response only with questions to gather information, never provide any suggestions or recommendations
+- Keep asking until enough detail is gathered
+
+If sufficient data is collected call appropriate tool/ sub-agent to summarize and gather little info about symptom in a structured paragraph.
+
+Conversation:
+User: {query}
 """
 system_instruction = """
 Based on all analyses, provide:
@@ -41,8 +65,8 @@ def run_research_pipeline(topic: str, session_id: str, user: str) -> dict:
     print("Deepsearch agent is working ...")
     print("=" * 50)
     main_agent = create_agent(
-        model = aws_llm_config.initialize_llm(),
-        tools=[build_search_agent, build_analysis_agent]
+        model = az_llm_config.initialize_llm(),
+        tools=[research]
     )
     message_with_history = db_config.get_all_history_by_session_id(os.getenv("HISTORY_COLLECTION"), session_id=session_id)
     if message_with_history:
@@ -53,7 +77,7 @@ def run_research_pipeline(topic: str, session_id: str, user: str) -> dict:
     # search_agent = build_search_agent()
     search_result = main_agent.invoke({
         "messages": [
-            SystemMessage(content=system_instruction),
+            SystemMessage(content=default_system_instruction),
             HumanMessage(content=f"{message_with_history},{topic}")]
     })
     state["search_results"] = search_result['messages'][-1].content
@@ -72,6 +96,8 @@ def run_research_pipeline(topic: str, session_id: str, user: str) -> dict:
 if __name__ == "__main__":
     user = "sumitsha"
     session_id = db_config.get_all_session_ids(os.getenv("HISTORY_COLLECTION"))
+    # doc={"session_id": session_id, "user": user, "history": "history"}
+    # check_session_exists_for_user(os.getenv("HISTORY_COLLECTION"), doc)
     if session_id == []:
         session_id = create_session_id()
     else:
