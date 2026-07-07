@@ -6,7 +6,7 @@ from rich import print
 import config.llm_config as az_llm_config
 import db.db_config as db_config
 from agent.agent_helpers.agent_memory import create_session_id, check_User_session_exists_update_history
-
+from agent.agent_helpers.helpers import safe_agent_invoke
 import os
 from dotenv import load_dotenv
 
@@ -72,18 +72,27 @@ def run_research_pipeline(topic: str, session_id: str, user: str) -> dict:
     if message_with_history:
         print(f"Found history for session_id {session_id}: {message_with_history}")
     else:
-        message_with_history = "ignore no history found for this session"
+        message_with_history = ""
 
     # search_agent = build_search_agent()
-    search_result = main_agent.invoke({
+    search_result = safe_agent_invoke(main_agent, {
         "messages": [
             SystemMessage(content=default_system_instruction),
             HumanMessage(content=f"{message_with_history},{topic}")]
-    })
+    }, 3)
     state["search_results"] = search_result['messages'][-1].content
-
-    # print("\n user : ", search_result['messages'][1].content)
+    state["Metadata"] = search_result['messages'][-1].response_metadata
     print("\n bot : ", state['search_results'])
+    
+    # Print only prompt, completion and total token counts from metadata
+    meta = state.get("Metadata", {})
+    token_usage = meta.get("token_usage", {}) if isinstance(meta, dict) else {}
+    prompt_tokens = token_usage.get("prompt_tokens")
+    completion_tokens = token_usage.get("completion_tokens")
+    total_tokens = token_usage.get("total_tokens")
+    print(f"prompt_tokens: {prompt_tokens}, completion_tokens: {completion_tokens}, total_tokens: {total_tokens}")
+    
+    #save search result to history and update in db
     history.append({"role": "bot", "content": state['search_results']})
     doc={"session_id": session_id, "user": user, "history": history}
     check_User_session_exists_update_history(os.getenv("HISTORY_COLLECTION"), doc) # check if session exists for user and update history, if not create new document with session id and history
